@@ -4,8 +4,9 @@ class Entry
     public string _prompt;
     public string _response;
 
-    public Entry(string date, string prompt, string response)
+    public Entry(string prompt, string response, string date=null)
     {
+        if (date == null) { date = DateTime.Now.ToShortDateString(); }
         _date = date;
         _prompt = prompt;
         _response = response;

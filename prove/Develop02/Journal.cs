@@ -1,6 +1,12 @@
+using System.Text.Json;
 class Journal
 {
     public List<Entry> _entries = new List<Entry>();
+
+    public Journal(List<Entry> entries)
+    {
+        _entries = entries;
+    }
     public List<string> _promptOptions = [
         "Who was the most interesting person I interacted with today?",
         "What was the best part of my day?",
@@ -20,28 +26,50 @@ class Journal
         string response = Console.ReadLine();
 
         _entries.Add(
-            new Entry(DateTime.Now.ToShortDateString(), prompt, response)
+            new Entry(prompt, response)
         );
         Console.WriteLine();
     }
     public void Display()
     {
-        foreach (Entry entry in _entries)
+        if (_entries.Count > 0)
         {
-            entry.Display();
+            foreach (Entry entry in _entries)
+            {
+                entry.Display();
+                Console.WriteLine();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Your journal is currently empty.");
             Console.WriteLine();
         }
     }
     public void Load()
     {
-        
+        Console.WriteLine("Enter the filename:");
+        Console.Write("> ");
+        string filename = Console.ReadLine();
+
+        if (File.Exists(filename))
+        {
+            string json = File.ReadAllText(filename);
+            _entries = JsonSerializer.Deserialize<List<Entry>>(json);
+        }
+        else
+        {
+            Console.WriteLine("File not found.");
+        }
+        Console.WriteLine();
     }
     public void Save()
     {
-        
-    }
-    public void Quit()
-    {
-        
+        Console.WriteLine("Enter the filename:");
+        Console.Write("> ");
+        string filename = Console.ReadLine();
+
+        File.WriteAllText(filename, JsonSerializer.Serialize(_entries));
+        Console.WriteLine();
     }
 }
