@@ -1,4 +1,3 @@
-using System.Text.Json;
 class Journal
 {
     public List<Entry> _entries = new List<Entry>();
@@ -54,8 +53,13 @@ class Journal
 
         if (File.Exists(filename))
         {
-            string json = File.ReadAllText(filename);
-            _entries = JsonSerializer.Deserialize<List<Entry>>(json);
+            _entries.Clear();
+            string[] lines = File.ReadAllLines(filename);
+            foreach (string line in lines)
+            {
+                Entry entry = Entry.Parse(line);
+                _entries.Add(entry);
+            }
         }
         else
         {
@@ -69,7 +73,12 @@ class Journal
         Console.Write("> ");
         string filename = Console.ReadLine();
 
-        File.WriteAllText(filename, JsonSerializer.Serialize(_entries));
+        string output = "";
+        foreach (Entry entry in _entries)
+        {
+            output += entry.Stringify() + "\n";
+        }
+        File.WriteAllText(filename, output);
         Console.WriteLine();
     }
 }
