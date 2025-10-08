@@ -28,6 +28,8 @@ class Journal
             new Entry(prompt, response)
         );
         Console.WriteLine();
+        Console.WriteLine("Saved! Returning to main menu...");
+        Thread.Sleep(1000);
     }
     public void Display()
     {
@@ -44,6 +46,8 @@ class Journal
             Console.WriteLine("Your journal is currently empty.");
             Console.WriteLine();
         }
+        Console.WriteLine("Press any key to go back to the main menu...");
+        Console.ReadKey();
     }
     public void Load()
     {
@@ -60,10 +64,13 @@ class Journal
                 Entry entry = Entry.Parse(line);
                 _entries.Add(entry);
             }
+            Console.WriteLine("Journal Loaded! Returning to main menu...");
+            Thread.Sleep(1000);
         }
         else
         {
-            Console.WriteLine("File not found.");
+            Console.WriteLine("File not found. Returning to main menu...");
+            Thread.Sleep(1000);
         }
         Console.WriteLine();
     }
@@ -80,5 +87,7 @@ class Journal
         }
         File.WriteAllText(filename, output);
         Console.WriteLine();
+        Console.WriteLine("Journal Saved! Returning to main menu...");
+        Thread.Sleep(1000);
     }
 }

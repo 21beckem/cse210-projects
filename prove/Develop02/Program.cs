@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 class Program
 {
@@ -8,30 +9,46 @@ class Program
         Console.WriteLine();
         while (true)
         {
-            Console.WriteLine("Select a choice from the menu:");
-            Console.WriteLine("1. Write a new entry");
-            Console.WriteLine("2. Display all entries");
-            Console.WriteLine("3. Load entries from a file");
-            Console.WriteLine("4. Save entries to a file");
-            Console.WriteLine("5. Quit");
-            
-            Console.Write("Enter your choice: ");
+            Console.Clear();
+            string c = journal._entries.Count.ToString().PadLeft(3);
+            Console.Write(String.Join("\n", [
+                "o------------------------------------",
+                "o                                   |",
+                "o            Journal App            |",
+                "o                                   |",
+               $"o   Total Entries: {c}              |",
+                "o                                   |",
+                "o                                   |",
+                "o  Select a choice from the menu:   |",
+                "o                                   |",
+                "o  (W) Write a new entry            |",
+                "o  (D) Display all entries          |",
+                "o  (L) Load entries from a file     |",
+                "o  (S) Save entries to a file       |",
+                "o  (Q) Quit                         |",
+                "o                                   |",
+                "o------------------------------------",
+                "",
+                "Enter your choice: "
+            ]));
+
             string choice = Console.ReadLine();
-            switch (choice)
+            Console.WriteLine();
+            switch (choice.ToLower())
             {
-                case "1":
+                case "w":
                     journal.Write();
                     break;
-                case "2":
+                case "d":
                     journal.Display();
                     break;
-                case "3":
+                case "l":
                     journal.Load();
                     break;
-                case "4":
+                case "s":
                     journal.Save();
                     break;
-                case "5":
+                case "q":
                     Console.WriteLine();
                     return;
                 default:
