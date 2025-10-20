@@ -21,7 +21,11 @@ class Reference
     }
     public void Display()
     {
-        string v2 = (_verse2 == 0) ? "" : "-"+_verse2;
-        Console.Write($"{_book} {_chapter}:{_verse1}{v2}");
+        Console.Write(this.ToString());
+    }
+    override public string ToString()
+    {
+        string v2 = (_verse2 == 0) ? "" : "-" + _verse2;
+        return $"{_book} {_chapter}:{_verse1}{v2}";
     }
 }

@@ -19,29 +19,34 @@ class Scripture
     }
     public void Display()
     {
+        Console.Clear();
         _ref.Display();
         foreach (Word w in _words)
         {
             w.Display();
         }
-        Console.WriteLine("\nVisible Indexes");
-        foreach (int i in _visibleIndexes)
-        {
-            Console.WriteLine(i);
-        }
+        Console.WriteLine();
     }
     public bool Hide(int numToHide)
     {
+        // if none off the bat, return false
         if (_visibleIndexes.Count == 0)
         {
             return false;
         }
-        Random randomGenerator = new Random();
-        int magicNumber = randomGenerator.Next(0, _visibleIndexes.Count);
-        Console.WriteLine("visible count: " + _visibleIndexes.Count);
-        Console.WriteLine("magicNumber:" + magicNumber);
-        _words[ _visibleIndexes[magicNumber] ].SetIsHidden(true);
-        _visibleIndexes.RemoveAt(magicNumber);
+        for (int i = 0; i < numToHide; i++)
+        {
+            Random randomGenerator = new Random();
+            int magicNumber = randomGenerator.Next(0, _visibleIndexes.Count);
+            _words[ _visibleIndexes[magicNumber] ].SetIsHidden(true);
+            _visibleIndexes.RemoveAt(magicNumber);
+            
+            // if none after starting, but there was at least 1 at the beginning, return true because something still changed
+            if (_visibleIndexes.Count == 0)
+            {
+                return true;
+            }
+        }
         return true;
     }
 }
