@@ -24,5 +24,24 @@ class Scripture
         {
             w.Display();
         }
+        Console.WriteLine("\nVisible Indexes");
+        foreach (int i in _visibleIndexes)
+        {
+            Console.WriteLine(i);
+        }
+    }
+    public bool Hide(int numToHide)
+    {
+        if (_visibleIndexes.Count == 0)
+        {
+            return false;
+        }
+        Random randomGenerator = new Random();
+        int magicNumber = randomGenerator.Next(0, _visibleIndexes.Count);
+        Console.WriteLine("visible count: " + _visibleIndexes.Count);
+        Console.WriteLine("magicNumber:" + magicNumber);
+        _words[ _visibleIndexes[magicNumber] ].SetIsHidden(true);
+        _visibleIndexes.RemoveAt(magicNumber);
+        return true;
     }
 }
