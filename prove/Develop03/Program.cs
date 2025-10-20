@@ -4,6 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop03 World!");
+        Scripture scrip = new(
+            new Reference("John", 2, 3),
+            "Jesus wept."
+        );
+        scrip.Display();
     }
 }
