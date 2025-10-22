@@ -1,21 +1,27 @@
 class Scripture
 {
     private Reference _ref;
+    private string _wholeText;
     private List<Word> _words;
     private List<int> _visibleIndexes;
 
     public Scripture(Reference refer, string wholeText)
     {
+        _wholeText = wholeText;
         _ref = refer;
+        Reset();
+    }
+    public void Reset()
+    {
         _visibleIndexes = new();
-        _words = wholeText
-                    .Split(" ")
-                    .Select((string w, int i) =>
-                    {
-                        _visibleIndexes.Add(i);
-                        return new Word(w);
-                    })
-                    .ToList();
+        _words = _wholeText
+            .Split(" ")
+            .Select((string w, int i) =>
+            {
+                _visibleIndexes.Add(i);
+                return new Word(w);
+            })
+            .ToList();
     }
     public void Display()
     {

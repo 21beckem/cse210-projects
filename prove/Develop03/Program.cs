@@ -10,93 +10,100 @@ class Program
         );
         int numToHide = 3;
 
-
-        // startup menu
+        // main loop to not just stop when scripture is done
         while (true)
         {
-            Console.Clear();
-            Console.Write(String.Join("\n", [
-                "",
-                "             Welcome to",
-                "        Scripture Memorizer",
-                "",
-                "     Current Scripture: " + myRef.ToString(),
-                "",
-                "  Select a choice from the menu:",
-                "",
-                "  (s) Start!",
-                "  (d) Declare custom scripture",
-                "  (n) Number of words to hide at a time",
-                "  (q) Quit",
-                "",
-                "------------------------------------",
-                "",
-                "Enter your choice: "
-            ]));
-            char choice = Console.ReadKey().KeyChar;
-            Console.WriteLine();
-            if (choice == 's')
+            myScrip.Reset();
+            // startup menu
+            while (true)
             {
-                break;
-            }
-            else if (choice == 'd')
-            {
-                Console.WriteLine("\nWhat is the name of the book of your scripture?");
-                Console.Write("> ");
-                string book = Console.ReadLine();
-                Console.WriteLine("\nWhat is the scripture chapter number?");
-                Console.Write("> ");
-                int chap = int.Parse(Console.ReadLine());
-                
-                Console.WriteLine("\nDoes your scripture contain multiple verses? (hit y or n)");
-                Console.Write("> ");
-                int v1 = 0, v2 = 0;
-                if (Console.ReadKey().KeyChar == 'y')
+                Console.Clear();
+                Console.Write(String.Join("\n", [
+                    "",
+                    "             Welcome to",
+                    "        Scripture Memorizer",
+                    "",
+                    "     Scripture to memorize: " + myRef.ToString(),
+                    "   Words to hide at a time: " + numToHide.ToString(),
+                    "",
+                    "  Select a choice from the menu:",
+                    "",
+                    "  (s) Start!",
+                    "  (d) Declare custom scripture",
+                    "  (n) Number of words to hide at a time",
+                    "  (q) Quit",
+                    "",
+                    "------------------------------------",
+                    "",
+                    "Enter your choice: "
+                ]));
+                char choice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+                if (choice == 's')
                 {
-                    Console.WriteLine("\nWhat is the first verse number?");
-                    Console.Write("> ");
-                    v1 = int.Parse(Console.ReadLine());
-                    Console.WriteLine("\nWhat is the second verse number?");
-                    Console.Write("> ");
-                    v2 = int.Parse(Console.ReadLine());
+                    break;
                 }
-                else
+                else if (choice == 'd')
                 {
-                    Console.WriteLine("\nWhat is the verse number?");
+                    Console.WriteLine("\nWhat is the name of the book of your scripture?");
                     Console.Write("> ");
-                    v1 = int.Parse(Console.ReadLine());
+                    string book = Console.ReadLine();
+                    Console.WriteLine("\nWhat is the scripture chapter number?");
+                    Console.Write("> ");
+                    int chap = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("\nDoes your scripture contain multiple verses? (hit y or n)");
+                    Console.Write("> ");
+                    int v1 = 0, v2 = 0;
+                    if (Console.ReadKey().KeyChar == 'y')
+                    {
+                        Console.WriteLine("\nWhat is the first verse number?");
+                        Console.Write("> ");
+                        v1 = int.Parse(Console.ReadLine());
+                        Console.WriteLine("\nWhat is the second verse number?");
+                        Console.Write("> ");
+                        v2 = int.Parse(Console.ReadLine());
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nWhat is the verse number?");
+                        Console.Write("> ");
+                        v1 = int.Parse(Console.ReadLine());
+                    }
+                    myRef = new(book, chap, v1, v2);
+
+                    Console.WriteLine("\nPlease paste all the text here:");
+                    Console.Write("> ");
+                    string wholeText = Console.ReadLine();
+
+                    myScrip = new(myRef, wholeText);
                 }
-                myRef = new(book, chap, v1, v2);
+                else if (choice == 'n')
+                {
+                    Console.WriteLine("How many words should be taken away at a time?");
+                    Console.Write("> ");
+                    numToHide = int.Parse(Console.ReadLine());
+                }
+                else if (choice == 'q')
+                {
+                    return;
+                }
+            }
 
-                Console.WriteLine("\nPlease paste all the text here:");
-                Console.Write("> ");
-                string wholeText = Console.ReadLine();
 
-                myScrip = new(myRef, wholeText);
-            }
-            else if (choice == 'n')
+            // memorizer part
+            while (true)
             {
-                Console.WriteLine("How many words should be taken away at a time? Currently: " + numToHide);
-                Console.Write("> ");
-                numToHide = int.Parse(Console.ReadLine());
+                myScrip.Display();
+                Console.WriteLine("\nPress Enter to hide words. Type q + Enter to quit.");
+                string input = Console.ReadLine();
+                if (input == "q") { break; }
+                if (!myScrip.Hide(numToHide)) { break; }
             }
-            else if (choice == 'q')
-            {
-                return;
-            }
+
+            Console.WriteLine("\nYou did it!");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
         }
 
-
-        // memorizer part
-        while (true)
-        {
-            myScrip.Display();
-            Console.WriteLine("\nPress Enter to hide words. Type q + Enter to quit.");
-            string input = Console.ReadLine();
-            if (input == "q") { break; }
-            if (!myScrip.Hide(numToHide)) { break; }
-        }
-        
-        Console.WriteLine("\nYou did it!");
     }
 }
