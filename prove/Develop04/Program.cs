@@ -4,8 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Activity act = new();
-        Console.Write("loading... ");
-        act.Loader(5);
+        Activity act = new("Breathing", "Used to stay alive and healthy.");
+        act.Start();
     }
 }

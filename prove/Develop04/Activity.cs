@@ -5,23 +5,48 @@ class Activity
     protected string _description;
     private DateTime _startTimestamp;
 
+    public Activity(string name, string desc)
+    {
+        _activityName = name;
+        _description = desc;
+    }
 
     private bool DisplayStartMsg()
     {
+        Console.Clear();
         Console.WriteLine($"Welcome to the {_activityName} Activity");
         Console.WriteLine();
         Console.WriteLine(_description);
         Console.WriteLine();
         Console.Write("How long, in seconds, would you like for your session? ");
         string res = Console.ReadLine();
-        return int.TryParse(res, out _duration);
+        if (!int.TryParse(res, out _duration))
+        {
+            Console.WriteLine("Oh no. Looks like that wasn't an integer. Returning to main menu...");
+            Loader(3);
+            return false;
+        }
+        return true;
+    }
+    private void DisplayGetReadyMsg()
+    {
+        Console.Clear();
+        Console.WriteLine("Get ready...");
+        Loader(3);
+        Console.WriteLine();
     }
     private void DisplayEndMsg()
     {
         Console.WriteLine();
+        Console.WriteLine("Well done!");
+        Loader(3);
+        Console.WriteLine($"You've completed another {_duration} seconds of the {_activityName} Activity");
+        Loader(3);
     }
-    public void Loader(int duration)
+    public void Loader(int duration, bool endWithNewLine=true)
     {
+        Console.CursorVisible = false;
+
         int startLeft = Console.CursorLeft;
         char[] loaderChars = new[] { '/', '-', '\\', '|' };
         for (int i = 0; i < duration; i++)
@@ -39,7 +64,14 @@ class Activity
         Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
         Console.Write(" ");
         Console.SetCursorPosition(startLeft, Console.CursorTop);
-        Console.Write("0");
+        Console.Write("    ");
+
+        if (endWithNewLine)
+        {
+            Console.WriteLine();
+        }
+        
+        Console.CursorVisible = true;
     }
     public virtual void RunActivity()
     {
@@ -48,7 +80,7 @@ class Activity
     public void Start()
     {
         if (!DisplayStartMsg()) { return; }
-        Loader(3);
+        DisplayGetReadyMsg();
         RunActivity();
         DisplayEndMsg();
     }
