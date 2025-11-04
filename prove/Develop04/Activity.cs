@@ -33,7 +33,6 @@ class Activity
         Console.Clear();
         Console.WriteLine("Get ready...");
         Loader(3);
-        Console.WriteLine();
     }
     private void DisplayEndMsg()
     {
