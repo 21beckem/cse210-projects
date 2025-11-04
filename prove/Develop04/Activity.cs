@@ -40,7 +40,7 @@ class Activity
         Console.WriteLine("Well done!");
         Loader(3);
         Console.WriteLine($"You've completed another {_duration} seconds of the {_activityName} Activity");
-        Loader(3);
+        Loader(5);
     }
     public void Loader(int duration, bool endWithNewLine=true)
     {
