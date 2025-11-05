@@ -32,7 +32,8 @@ class Program
             }
             else if (key == "4")
             {
-                // chat with specialist
+                Specialist spec = new();
+                spec.Chat();
             }
             else if (key == "5")
             {
