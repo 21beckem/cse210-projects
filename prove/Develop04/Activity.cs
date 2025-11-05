@@ -5,10 +5,42 @@ class Activity
     protected string _description;
     private DateTime _startTimestamp;
 
-    public Activity(string name, string desc)
+    private List<string> _prompts;
+    private List<string> _questions;
+    private List<int> _unusedQuestions = new();
+
+    public Activity(string name, string desc, List<string> prompts=null, List<string> questions=null)
     {
         _activityName = name;
         _description = desc;
+        _prompts = prompts;
+        _questions = questions;
+    }
+
+    public string GetRandomPrompt()
+    {
+        if (_prompts == null || _prompts.Count < 1) { return ""; }
+        Random randomGenerator = new Random();
+        int magicNumber = randomGenerator.Next(0, _prompts.Count);
+        return _prompts[magicNumber];
+    }
+    public string GetRandomQuestion()
+    {
+        if (_questions == null || _questions.Count < 1) { return ""; }
+        // if ran out of questions, restart
+        if (_unusedQuestions.Count < 1)
+        {
+            for (int i = 0; i < _questions.Count; i++)
+            {
+                _unusedQuestions.Add(i);
+            }
+        }
+
+        Random randomGenerator = new Random();
+        int magicNumber = randomGenerator.Next(0, _unusedQuestions.Count);
+        string output = _questions[ _unusedQuestions[magicNumber] ];
+        _unusedQuestions.RemoveAt(magicNumber);
+        return output;
     }
 
     private bool DisplayStartMsg()
