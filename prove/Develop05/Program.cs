@@ -4,6 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop05 World!");
+        // GoalTracker.AddGoalType(typeof(Goal));
+        GoalTracker.AddGoalType(typeof(SimpleGoal));
+        
+        GoalTracker gt = new();
+        gt.DisplayMenu();
     }
 }
