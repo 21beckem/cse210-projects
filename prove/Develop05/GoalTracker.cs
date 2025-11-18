@@ -85,6 +85,9 @@ class GoalTracker
                 outputFile.WriteLine(g.Stringify());
             }
         }
+        
+        string s = _goals.Count==1 ? "" : "s";
+        DisplayAlert($"Saved {_goals.Count} goal{s}!");
     }
     public void LoadGoals()
     {

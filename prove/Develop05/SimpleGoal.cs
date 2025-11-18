@@ -1,19 +1,8 @@
 class SimpleGoal : Goal
 {
-    public override void PromptNew()
-    {
-        base.PromptNew();
-    }
-    public override string Stringify()
-    {
-        return base.Stringify();
-    }
-    public override void DeStringify(string[] attrs)
-    {
-        base.DeStringify(attrs);
-    }
     public override int RecordEvent()
     {
+        _done = true;
         return base.RecordEvent();
     }
 }

@@ -22,13 +22,14 @@ class Goal
     }
     public virtual string Stringify()
     {
-        return $"{GetType()}|@|@|{_name}|$|{_desc}|$|{_pts}";
+        return $"{GetType()}|@|@|{_name}|$|{_desc}|$|{_pts}|$|{_done}";
     }
     public virtual void DeStringify(string[] attrs)
     {
         _name = attrs[0];
         _desc = attrs[1];
         _pts = int.Parse(attrs[2]);
+        _done = bool.Parse(attrs[3]);
     }
     public virtual int RecordEvent()
     {
