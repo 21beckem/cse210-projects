@@ -5,6 +5,7 @@ class Goal
     protected bool _done;
     protected int _pts;
 
+    public string GetName() { return _name; }
     public virtual void PromptNew()
     {
         Console.Write("Enter the name of your goal: ");
@@ -25,6 +26,6 @@ class Goal
     }
     public virtual int RecordEvent()
     {
-        return 0;
+        return _pts;
     }
 }

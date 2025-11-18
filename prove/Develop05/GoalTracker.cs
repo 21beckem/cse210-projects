@@ -19,6 +19,10 @@ class GoalTracker
         Console.WriteLine();
     }
 
+    private void DisplayAlert(string msg)
+    {
+        Console.WriteLine("\n  " + msg);
+    }
 
     public void CreateNewGoal()
     {
@@ -38,15 +42,34 @@ class GoalTracker
         Console.Clear();
         Console.WriteLine($"\n  Created 1 new {_goalTypes[response-1]}.\n");
     }
+    private void DisplayGoals(bool justName=false)
+    {
+        if (_goals.Count < 1)
+        {
+            Console.WriteLine("You have no currently loaded goals.");
+        }
+        else
+        {
+            Console.WriteLine("The goals are:");
+            for (int i = 0; i < _goals.Count; i++)
+            {
+                Goal g = _goals[i];
+                Console.Write($"  {i+1}. ");
+                if (justName)
+                {
+                    Console.WriteLine(g.GetName());
+                }
+                else
+                {
+                    g.Display();
+                }
+            }
+            Console.WriteLine();
+        }
+    }
     public void ListGoals()
     {
-        Console.WriteLine("The goals are:");
-        for (int i = 0; i < _goals.Count; i++)
-        {
-            Goal g = _goals[i];
-            Console.Write($"  {i+1}. ");
-            g.Display();
-        }
+        DisplayGoals(false);
         Pause();
         Console.Clear();
     }
@@ -60,7 +83,23 @@ class GoalTracker
     }
     public void RecordEvent()
     {
-
+        DisplayGoals(true);
+        if (_goals.Count < 1)
+        {
+            Pause();
+            Console.Clear();
+        }
+        else
+        {
+            Console.Write("Enter which goal you acomplished: ");
+            int response = int.Parse(Console.ReadLine());
+            Goal g = _goals[response-1];
+            int earned = g.RecordEvent();
+            _totalPts += earned;
+            
+            Console.Clear();
+            DisplayAlert($"Congradulations! You have earned {earned} points!");
+        }
     }
     public void Quit()
     {
@@ -71,7 +110,10 @@ class GoalTracker
         Console.Clear();
         while (true)
         {
-            Console.Write(String.Join("\n", new List<string> {
+            Console.Write(string.Join("\n", new List<string> {
+                "",
+               $"You currently have {_totalPts} points",
+                "",
                 "Menu Options",
                 "  1. Create New Goal",
                 "  2. List Goals",
