@@ -8,6 +8,10 @@ class SimpleGoal : Goal
     {
         return base.Stringify();
     }
+    public override void DeStringify(string[] attrs)
+    {
+        base.DeStringify(attrs);
+    }
     public override int RecordEvent()
     {
         return base.RecordEvent();

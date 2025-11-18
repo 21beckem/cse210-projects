@@ -21,7 +21,8 @@ class GoalTracker
 
     private void DisplayAlert(string msg)
     {
-        Console.WriteLine("\n  " + msg);
+        Console.Clear();
+        Console.WriteLine("\n  " + msg + "\n");
     }
 
     public void CreateNewGoal()
@@ -39,8 +40,7 @@ class GoalTracker
         goal.PromptNew();
         _goals.Add(goal);
 
-        Console.Clear();
-        Console.WriteLine($"\n  Created 1 new {_goalTypes[response-1]}.\n");
+        DisplayAlert($"Created 1 new {_goalTypes[response-1]}.");
     }
     private void DisplayGoals(bool justName=false)
     {
@@ -73,13 +73,42 @@ class GoalTracker
         Pause();
         Console.Clear();
     }
-    public void Save()
+    public void SaveGoals()
     {
+        string filename = "goals.txt";
 
+        using (StreamWriter outputFile = new StreamWriter(filename))
+        {
+            outputFile.WriteLine(_totalPts);
+            foreach (Goal g in _goals)
+            {
+                outputFile.WriteLine(g.Stringify());
+            }
+        }
     }
-    public void Load()
+    public void LoadGoals()
     {
+        string filename = "goals.txt";
 
+        _goals = new();
+
+        string[] lines = File.ReadAllLines(filename);
+        _totalPts = int.Parse(lines[0]);
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] parts = lines[i].Split("|@|@|");
+
+            string type = parts[0];
+            string[] attrs = parts[1].Split("|$|");
+            
+            Goal g = (Goal) Activator.CreateInstance(Type.GetType(type));
+            g.DeStringify(attrs);
+            _goals.Add(g);
+        }
+
+        string s = lines.Length==2 ? "" : "s";
+        DisplayAlert($"Loaded {lines.Length-1} goal{s}!");
     }
     public void RecordEvent()
     {
@@ -97,7 +126,6 @@ class GoalTracker
             int earned = g.RecordEvent();
             _totalPts += earned;
             
-            Console.Clear();
             DisplayAlert($"Congradulations! You have earned {earned} points!");
         }
     }
@@ -111,7 +139,6 @@ class GoalTracker
         while (true)
         {
             Console.Write(string.Join("\n", new List<string> {
-                "",
                $"You currently have {_totalPts} points",
                 "",
                 "Menu Options",

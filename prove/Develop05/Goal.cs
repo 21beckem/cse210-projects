@@ -24,6 +24,12 @@ class Goal
     {
         return $"{GetType()}|@|@|{_name}|$|{_desc}|$|{_pts}";
     }
+    public virtual void DeStringify(string[] attrs)
+    {
+        _name = attrs[0];
+        _desc = attrs[1];
+        _pts = int.Parse(attrs[2]);
+    }
     public virtual int RecordEvent()
     {
         return _pts;
