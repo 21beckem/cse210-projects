@@ -15,10 +15,14 @@ class Goal
         Console.Write("Enter the number of points associated with this goal (must be a whole number): ");
         _pts = int.Parse(Console.ReadLine());
     }
-    public void Display()
+    public virtual void Display(bool endWithNewLine=true)
     {
         string check = _done ? "[X]" : "[ ]";
-        Console.WriteLine($"{check} {_name} ({_desc})");
+        Console.Write($"{check} {_name} ({_desc})");
+        if (endWithNewLine)
+        {
+            Console.WriteLine();
+        }
     }
     public virtual string Stringify()
     {

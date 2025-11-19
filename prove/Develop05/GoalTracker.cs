@@ -75,6 +75,17 @@ class GoalTracker
     }
     public void SaveGoals()
     {
+        if (_goals.Count < 1)
+        {
+            DisplayAlert($"You don't have any goals currently loaded. Saving this will overwrite any other goals currently saved.");
+            Console.Write("Are you sure? (y/n): ");
+            string response = Console.ReadLine();
+            if (response != "y" && response != "Y")
+            {
+                DisplayAlert($"Save canceled.");
+                return;
+            }
+        }
         string filename = "goals.txt";
 
         using (StreamWriter outputFile = new StreamWriter(filename))
@@ -91,6 +102,17 @@ class GoalTracker
     }
     public void LoadGoals()
     {
+        if (_goals.Count > 0)
+        {
+            DisplayAlert($"You currently have goals loaded. Loading will overwrite what you currently have.");
+            Console.Write("Are you sure? (y/n): ");
+            string response = Console.ReadLine();
+            if (response != "y" && response != "Y")
+            {
+                DisplayAlert($"Load canceled.");
+                return;
+            }
+        }
         string filename = "goals.txt";
 
         _goals = new();
@@ -129,7 +151,8 @@ class GoalTracker
             int earned = g.RecordEvent();
             _totalPts += earned;
             
-            DisplayAlert($"Congradulations! You have earned {earned} points!");
+            string congrats = earned > 0 ? "Congradulations!" : "Well, sorry.";
+            DisplayAlert($"{congrats} You have earned {earned} points.");
         }
     }
     public void Quit()
