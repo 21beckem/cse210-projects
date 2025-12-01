@@ -13,7 +13,7 @@ class Map
         _cells = Generate2dArrayOfCells(sizeY, sizeX);
 
         // _character = new(sizeX/2, sizeY/2);
-        _character = new(2, 2, this);
+        _character = new(5, 5, this);
     }
     private Cell[,] Generate2dArrayOfCells(int rows, int cols)
     {
@@ -36,6 +36,7 @@ class Map
 
     public void DisplayAll()
     {
+        Console.ResetColor();
         Console.Clear();
 
         // hide cursor
