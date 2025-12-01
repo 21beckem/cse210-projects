@@ -4,6 +4,7 @@ class Game
 
     public void Play()
     {
+        _map.DisplayAll();
         while (true)
         {
             _map.Display();

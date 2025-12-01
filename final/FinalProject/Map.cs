@@ -13,7 +13,7 @@ class Map
         _cells = Generate2dArrayOfCells(sizeY, sizeX);
 
         // _character = new(sizeX/2, sizeY/2);
-        _character = new(2, 2);
+        _character = new(2, 2, this);
     }
     private Cell[,] Generate2dArrayOfCells(int rows, int cols)
     {
@@ -24,41 +24,29 @@ class Map
         {
             for (int j = 0; j < cols; j++)
             {
-                myArray[i, j] = new Cell();
+                myArray[i, j] = new Cell(j, i);
             }
         }
         return myArray;
     }
+    public Cell GetCellAt(int posX, int posY)
+    {
+        return _cells[posY, posX];
+    }
 
-    public void Display()
+    public void DisplayAll()
     {
         Console.Clear();
 
         // hide cursor
-        bool cursorVisibleReset = Console.CursorVisible;
         Console.CursorVisible = false;
-
-        // get position of interaction
-
-
-        for (int i = 0; i < _cells.GetLength(0); i++)
+        foreach (Cell c in _cells)
         {
-            for (int j = 0; j < _cells.GetLength(1); j++)
-            {
-                if (_character.AreYouHere(j,i))
-                {
-                    _character.Display();
-                }
-                else
-                {
-                    _cells[i, j].Display();
-                }
-            }
-            Console.WriteLine();
+            c.Display();
         }
-        Console.ResetColor();
-        Console.CursorVisible = cursorVisibleReset;
+        _character.Display();
     }
+    public void Display() { _character.Display(); }
     public void MoveX(int d) { _character.MoveX(d); }
     public void MoveY(int d) { _character.MoveY(d); }
 }
