@@ -7,15 +7,15 @@ class Game
         while (true)
         {
             _map.Display();
-            
+
             char key = Console.ReadKey(true).KeyChar;
             switch (key)
             {
-                case 'w':
-                    // move up
-                    break;
-                default:
-                    break;
+                case 'w': _map.MoveY( 1); break;
+                case 'd': _map.MoveX( 1); break;
+                case 's': _map.MoveY(-1); break;
+                case 'a': _map.MoveX(-1); break;
+                default: break;
             }
         }
     }
