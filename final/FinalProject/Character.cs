@@ -8,6 +8,7 @@ class Character {
     private int _previousFacingX = 0;
     private int _previousFacingY = 0;
     private Map _map;
+    private ConsoleColor _facingCursorColor = ConsoleColor.DarkGray;
 
     public Character(int posX, int posY, Map map)
     {
@@ -27,30 +28,25 @@ class Character {
     public void Display()
     {
         // re-render last position we were at with it's cell
-        if (_posX != _previousPosX || _posY != _previousPosY)
-        {
-            _map.GetCellAt(_previousPosX, _previousPosY).Display();
-            _previousPosX = _posX;
-            _previousPosY = _posY;
-        }
+        _map.GetCellAt(_previousPosX, _previousPosY).Display();
+        _previousPosX = _posX;
+        _previousPosY = _posY;
 
         // re-render last position our facing cursor was at with it's cell
         int fx = _posX + _facingLookup[_facing][0];
         int fy = _posY + _facingLookup[_facing][1];
-        if (fx != _previousFacingX || fy != _previousFacingY)
-        {
-            _map.GetCellAt(_previousFacingX, _previousFacingY).Display();
-            _previousFacingX = fx;
-            _previousFacingY = fy;
-        }
+        _map.GetCellAt(_previousFacingX, _previousFacingY).Display();
+        _previousFacingX = fx;
+        _previousFacingY = fy;
 
         // render our guy
         Console.SetCursorPosition(_posX, _posY);
+        Console.ResetColor();
         Console.Write("X");
 
         // render our facing cursor cell with the background highlight
-        Console.BackgroundColor = ConsoleColor.DarkGray;
-        _map.GetCellAt(fx, fy).Display();
+        Console.BackgroundColor = _facingCursorColor;
+        _map.GetCellAt(fx, fy).Display(_facingCursorColor);
         Console.ResetColor();
     }
     public void MoveX(int dist)
@@ -74,5 +70,18 @@ class Character {
         }
         // face this way
         _facing = (dist == 1) ? 'S' : 'N';
+    }
+    public Item? Interact(char k)
+    {
+        int fx = _posX + _facingLookup[_facing][0];
+        int fy = _posY + _facingLookup[_facing][1];
+        Cell c = _map.GetCellAt(fx, fy);
+        Item? res = c.Interact(k);
+
+        Console.BackgroundColor = _facingCursorColor;
+        _map.GetCellAt(fx, fy).Display();
+        Console.ResetColor();
+
+        return res;
     }
 }

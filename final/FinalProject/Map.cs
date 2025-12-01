@@ -24,7 +24,14 @@ class Map
         {
             for (int j = 0; j < cols; j++)
             {
-                myArray[i, j] = new Cell(j, i);
+                if (i>3 && i<12  &&  j>5 && j< 20)
+                {
+                    myArray[i, j] = new Farmland(j, i);
+                }
+                else 
+                {
+                    myArray[i, j] = new Grass(j, i);
+                }
             }
         }
         return myArray;
@@ -36,6 +43,7 @@ class Map
 
     public void DisplayAll()
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.ResetColor();
         Console.Clear();
 
@@ -50,4 +58,5 @@ class Map
     public void Display() { _character.Display(); }
     public void MoveX(int d) { _character.MoveX(d); }
     public void MoveY(int d) { _character.MoveY(d); }
+    public Item? Interact(char k) { return _character.Interact(k); }
 }

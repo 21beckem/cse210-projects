@@ -16,7 +16,7 @@ class Game
                 case 'd': _map.MoveX( 1); break;
                 case 's': _map.MoveY(-1); break;
                 case 'a': _map.MoveX(-1); break;
-                default: break;
+                default: _map.Interact(key); break;
             }
         }
     }

@@ -1,8 +1,8 @@
 class Cell
 {
-    private int _posX;
-    private int _posY;
-    private bool _canWalkOn;
+    protected int _posX;
+    protected int _posY;
+    protected bool _canWalkOn;
 
     public Cell(int posX, int posY)
     {
@@ -10,13 +10,14 @@ class Cell
         _posY = posY;
     }
 
-    public void Display()
+    public virtual void Display(ConsoleColor backgroundColor = ConsoleColor.Black)
     {
         Console.SetCursorPosition(_posX, _posY);
+        Console.BackgroundColor = backgroundColor;
         Console.Write(" ");
     }
 
-    public Item? Interact()
+    public virtual Item? Interact(char k)
     {
         return null;
     }
