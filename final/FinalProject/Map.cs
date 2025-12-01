@@ -8,8 +8,8 @@ class Map
 
     public Map()
     {
-        int sizeX = 100;
-        int sizeY = 25;
+        int sizeX = 50;
+        int sizeY = 20;
         _cells = Generate2dArrayOfCells(sizeY, sizeX);
 
         // _character = new(sizeX/2, sizeY/2);
@@ -24,11 +24,19 @@ class Map
         {
             for (int j = 0; j < cols; j++)
             {
-                if (i>3 && i<12  &&  j>5 && j< 20)
+                if (i<=(rows/2)+1 && i>=(rows/2)-1 && j==cols-1) // gate
+                {
+                    myArray[i, j] = new Gate(j, i);
+                }
+                else if (i==0||i==rows-1 || j==0||j==cols-1) // outside fence
+                {
+                    myArray[i, j] = new Fence(j, i);
+                }
+                else if (i>3 && i<12  &&  j>5 && j< 20) // patch of farmland
                 {
                     myArray[i, j] = new Farmland(j, i);
                 }
-                else 
+                else //grass
                 {
                     myArray[i, j] = new Grass(j, i);
                 }

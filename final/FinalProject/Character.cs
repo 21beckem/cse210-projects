@@ -49,13 +49,21 @@ class Character {
         _map.GetCellAt(fx, fy).Display(_facingCursorColor);
         Console.ResetColor();
     }
+    private bool CanCellBeWalkedOnAt(int posX, int posY)
+    {
+        return _map.GetCellAt(posX, posY).CanBeWalkedOn();
+    }
     public void MoveX(int dist)
     {
         if (dist != 1 && dist != -1) return;
         if ((dist == 1 && _facing == 'E') || (dist == -1 && _facing == 'W'))
         {
             // only move if already facing that way
-            _posX += dist;
+            if (CanCellBeWalkedOnAt(_posX+dist, _posY))
+            {
+                // only move if I can walk there.
+                _posX += dist;
+            }
         }
         // face this way
         _facing = (dist == 1) ? 'E' : 'W';
@@ -66,7 +74,11 @@ class Character {
         if ((dist == 1 && _facing == 'S') || (dist == -1 && _facing == 'N'))
         {
             // only move if already facing that way
-            _posY -= dist;
+            if (CanCellBeWalkedOnAt(_posX, _posY-dist))
+            {
+                // only move if I can walk there.
+                _posY -= dist;
+            }
         }
         // face this way
         _facing = (dist == 1) ? 'S' : 'N';
