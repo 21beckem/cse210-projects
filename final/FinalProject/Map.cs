@@ -4,7 +4,7 @@ class Map
 {
     private Cell[,] _cells;
     private Character _character;
-    // private Inventory _inventory;
+    private Inventory _inventory = new();
 
     public Map()
     {
@@ -63,8 +63,14 @@ class Map
         }
         _character.Display();
     }
+    public void DisplayInventory()
+    {
+        Console.Clear();
+        _inventory.Display();
+        DisplayAll();
+    }
     public void Display() { _character.Display(); }
     public void MoveX(int d) { _character.MoveX(d); }
     public void MoveY(int d) { _character.MoveY(d); }
-    public Item? Interact(char k) { return _character.Interact(k); }
+    public void Interact(char k) { _inventory.AddItem( _character.Interact(k) ); }
 }

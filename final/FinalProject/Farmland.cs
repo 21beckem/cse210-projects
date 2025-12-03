@@ -23,7 +23,7 @@ class Farmland : Cell
         if (_status >= _statusDisplay.Length)
         {
             _status = 0;
-            return new Item();
+            return new Item("wheat");
         }
         else
         {
