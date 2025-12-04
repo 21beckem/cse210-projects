@@ -3,11 +3,19 @@ class Cell
     protected int _posX;
     protected int _posY;
     protected bool _canWalkOn = true;
+    protected Inventory _inventory;
 
     public Cell(int posX, int posY)
     {
         _posX = posX;
         _posY = posY;
+        _inventory = new();
+    }
+    public Cell(int posX, int posY, Inventory i)
+    {
+        _posX = posX;
+        _posY = posY;
+        _inventory = i;
     }
 
     public bool CanBeWalkedOn() { return _canWalkOn; }
@@ -19,8 +27,5 @@ class Cell
         Console.Write(" ");
     }
 
-    public virtual Item? Interact(char k)
-    {
-        return null;
-    }
+    public virtual void Interact(char k) { }
 }

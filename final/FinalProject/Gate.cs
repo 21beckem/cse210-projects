@@ -11,13 +11,12 @@ class Gate : Cell
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.Write("I");
     }
-    public override Item? Interact(char k)
+    public override void Interact(char k)
     {
         Console.ResetColor();
         Console.Clear();
         Console.CursorVisible = true;
         Console.WriteLine("\n   Game exited successfully :) Have a nice day!");
         Environment.Exit(0);
-        return null;
     }
 }

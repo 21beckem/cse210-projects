@@ -1,6 +1,13 @@
 class Inventory
 {
     private Dictionary<string, int> _items = new();
+    private int _rowNum;
+
+    public Inventory() {}
+    public Inventory(int rowNum)
+    {
+        _rowNum = rowNum;
+    }
 
 
     public void AddItem(Item? item)
@@ -14,6 +21,7 @@ class Inventory
         {
             _items.Add(item.GetName(), item.GetCount());
         }
+        Display();
     }
     public bool UseItem(string thisItemName)
     {
@@ -24,19 +32,22 @@ class Inventory
             {
                 _items.Remove(thisItemName);
             }
+            Display();
             return true;
         }
         return false;
     }
 
-    public void Display()
+    private int _lastDisplayStrLength = 0;
+    private void Display()
     {
-        Console.WriteLine("\n  Current Inventory:");
-        foreach (KeyValuePair<string, int> entry in _items)
-        {
-            new Item(entry).Display();
-        }
-        Console.WriteLine("Press any key to go back...");
-        Console.ReadKey();
+        Console.SetCursorPosition(0, _rowNum);
+        string myString = string.Join(", ",
+            _items.Select(item => $"{item.Key}: {item.Value}x")
+        );
+
+        int afterLength = Math.Max(0, _lastDisplayStrLength - myString.Length);
+        Console.Write(" " + myString + new string(' ', afterLength));
+        _lastDisplayStrLength = myString.Length;
     }
 }

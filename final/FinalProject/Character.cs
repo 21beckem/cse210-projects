@@ -42,7 +42,7 @@ class Character {
         // render our guy
         Console.SetCursorPosition(_posX, _posY);
         Console.ResetColor();
-        Console.Write("X");
+        Console.Write("@");
 
         // render our facing cursor cell with the background highlight
         Console.BackgroundColor = _facingCursorColor;
@@ -83,17 +83,15 @@ class Character {
         // face this way
         _facing = (dist == 1) ? 'S' : 'N';
     }
-    public Item? Interact(char k)
+    public void Interact(char k)
     {
         int fx = _posX + _facingLookup[_facing][0];
         int fy = _posY + _facingLookup[_facing][1];
         Cell c = _map.GetCellAt(fx, fy);
-        Item? res = c.Interact(k);
+        c.Interact(k);
 
         Console.BackgroundColor = _facingCursorColor;
         _map.GetCellAt(fx, fy).Display();
         Console.ResetColor();
-
-        return res;
     }
 }
