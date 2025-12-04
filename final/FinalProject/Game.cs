@@ -9,15 +9,17 @@ class Game
         {
             _map.Display();
 
-            char key = Console.ReadKey(true).KeyChar;
-            switch (key)
-            {
-                case 'w': _map.MoveY( 1); break;
-                case 'd': _map.MoveX( 1); break;
-                case 's': _map.MoveY(-1); break;
-                case 'a': _map.MoveX(-1); break;
-                default: _map.Interact(key); break;
-            }
+            ConsoleKeyInfo k = Console.ReadKey(true);
+
+            if (k.Key == ConsoleKey.W)      _map.MoveY( 1);
+            else if (k.Key == ConsoleKey.D) _map.MoveX( 1);
+            else if (k.Key == ConsoleKey.S) _map.MoveY(-1);
+            else if (k.Key == ConsoleKey.A) _map.MoveX(-1);
+            else if (k.Key == ConsoleKey.UpArrow)    _map.SetFacing('S');
+            else if (k.Key == ConsoleKey.RightArrow) _map.SetFacing('E');
+            else if (k.Key == ConsoleKey.DownArrow)  _map.SetFacing('N');
+            else if (k.Key == ConsoleKey.LeftArrow)  _map.SetFacing('W');
+            else _map.Interact(k.KeyChar);
         }
     }
 }

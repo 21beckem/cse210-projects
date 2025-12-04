@@ -81,5 +81,6 @@ class Map
     public void Display() { _character.Display(); }
     public void MoveX(int d) { _character.MoveX(d); }
     public void MoveY(int d) { _character.MoveY(d); }
+    public void SetFacing(char f) { _character.SetFacing(f); }
     public void Interact(char k) { _character.Interact(k); }
 }

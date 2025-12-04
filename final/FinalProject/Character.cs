@@ -56,32 +56,28 @@ class Character {
     public void MoveX(int dist)
     {
         if (dist != 1 && dist != -1) return;
-        if ((dist == 1 && _facing == 'E') || (dist == -1 && _facing == 'W'))
+        if (CanCellBeWalkedOnAt(_posX+dist, _posY))
         {
-            // only move if already facing that way
-            if (CanCellBeWalkedOnAt(_posX+dist, _posY))
-            {
-                // only move if I can walk there.
-                _posX += dist;
-            }
+            // only move if I can walk there.
+            _posX += dist;
         }
         // face this way
-        _facing = (dist == 1) ? 'E' : 'W';
+        // _facing = (dist == 1) ? 'E' : 'W';
     }
     public void MoveY(int dist)
     {
         if (dist != 1 && dist != -1) return;
-        if ((dist == 1 && _facing == 'S') || (dist == -1 && _facing == 'N'))
+        if (CanCellBeWalkedOnAt(_posX, _posY-dist))
         {
-            // only move if already facing that way
-            if (CanCellBeWalkedOnAt(_posX, _posY-dist))
-            {
-                // only move if I can walk there.
-                _posY -= dist;
-            }
+            // only move if I can walk there.
+            _posY -= dist;
         }
         // face this way
-        _facing = (dist == 1) ? 'S' : 'N';
+        // _facing = (dist == 1) ? 'S' : 'N';
+    }
+    public void SetFacing(char f) {
+        if (!_facingLookup.ContainsKey(f)) return;
+        _facing = f;
     }
     public void Interact(char k)
     {
