@@ -75,8 +75,13 @@ class Map
     private void DisplayKeyRow()
     {
         Console.SetCursorPosition(0, _keyRowH);
-        Console.WriteLine(" 1 = Use Water. 2 = Harvest. 3 = Get Water.");
-        Console.WriteLine("         WASD to move/face a direction");
+        Console.Write(string.Join("\n", [
+            " 1 = Use Water. 2 = Harvest. 3 = Get Water.",
+            "               WASD to move",
+            "      Arrow Keys to face a direction",
+            " To quit, place your player cursor over one",
+            "   of the gates (White I) and press space."
+        ]));
     }
     public void Display() { _character.Display(); }
     public void MoveX(int d) { _character.MoveX(d); }
